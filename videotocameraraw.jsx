@@ -2,10 +2,16 @@ var window = new Window("palette", "Video to CameraRaw", undefined);
 window.orientation = "column";
 
 // Get dimensions of source footage
+var footage = app.project.item(1);
+var footageName = footage.name;
+var footageWidth = footage.width;
+var footageHeight = footage.height;
+var footagePAR = footage.pixelAspect;
+var footageDuration = footage.duration;
+var footageFPS = footage.frameRate;
 
 // Create comp of source footage
-// TODOO
-var comp = app.project.activeItem;
+var comp = app.project.items.addComp(footageName + "_VTCR", footageWidth, footageHeight, footagePAR, footageDuration, footageFPS);
 
 // Render source footage to png/psd sequence (drop down menu)
 var fileTypeGroup = window.add("group", undefined, "");
