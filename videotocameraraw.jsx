@@ -44,7 +44,8 @@ if ((app.project.activeItem == null) || !(app.project.activeItem instanceof Foot
             var files = outputFolder.getFiles(function(file) {
                 return (file instanceof File);
             });
-            var sequenceDigits = files[0].name.substring(comp.name.lastIndexOf("_") - 1);
+            var fNameArray = files[0].name.split('_');
+            var sequenceDigits = fNameArray[fNameArray.length - 1];
             sequenceDigits = sequenceDigits.substring(0, sequenceDigits.lastIndexOf("."));
 
             var file;
