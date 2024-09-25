@@ -56,7 +56,7 @@ if ((app.project.activeItem == null) || !(app.project.activeItem instanceof Foot
                 file.rename(fileName + extension);
             }
 
-            var sequence = outputFolder.fsName + "\\" + comp.name.substring(0, comp.name.lastIndexOf(".")) + "_" + sequenceDigits + ".raw";
+            var sequence = outputFolder.fsName + "\\" + comp.name.substring(0, comp.name.lastIndexOf(".")) + "_" + sequenceDigits + extension;
             comp.remove();
 
             var importOptions = new ImportOptions();
