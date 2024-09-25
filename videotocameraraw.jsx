@@ -1,6 +1,3 @@
-var window = new Window("palette", "Video to CameraRaw", undefined);
-window.orientation = "column";
-
 // Ensure active item is a footage item
 if ((app.project.activeItem == null) || !(app.project.activeItem instanceof FootageItem)) {
     alert("Select a footage item!");
@@ -31,7 +28,6 @@ if ((app.project.activeItem == null) || !(app.project.activeItem instanceof Foot
         // Set render settings
         var outputModule = renderQueueItem.outputModule(1);
         outputModule.applyTemplate("Photoshop");
-        //setRenderSettings(renderQueueItem, 1);
         if (!outputFolder.exists) {
             if (!outputFolder.create()) {
                 alert("Couldn't create render folder");
@@ -44,28 +40,31 @@ if ((app.project.activeItem == null) || !(app.project.activeItem instanceof Foot
 
             app.beginUndoGroup("Video to Camera Raw (Post-render)");
             // Import psd sequence as camera raw files
+            // First Approach: Change the .psd's extensions to .raw
             var files = outputFolder.getFiles(function(file) {
                 return (file instanceof File);
             });
             var sequenceDigits = files[0].name.substring(comp.name.lastIndexOf("_") - 1);
             sequenceDigits = sequenceDigits.substring(0, sequenceDigits.lastIndexOf("."));
-            var sequence = outputFolder.fsName + "\\" + comp.name.substring(0, comp.name.lastIndexOf(".")) + "_" + sequenceDigits + ".psd";
+
+            var file;
+            var extension = ".raw";
+            for (var i = 0; i < files.length; i++) {
+                file = files[i];
+                fileName = file.name.substring(0, file.name.lastIndexOf("."));
+                file.rename(fileName + extension);
+            }
+
+            var sequence = outputFolder.fsName + "\\" + comp.name.substring(0, comp.name.lastIndexOf(".")) + "_" + sequenceDigits + ".raw";
 
             var importOptions = new ImportOptions();
             importOptions.file = new File(sequence);
             importOptions.sequence = true;
             importOptions.forceAlphabetical = false;
             var sequenceFootageItem = app.project.importFile(importOptions);
+
+            // Second approach: In case support for adjusting format via script is added, do so via importOptions.format / all files or however it would be called
             app.endUndoGroup();
         }
     }
-    window.center();
-    window.show();
-}
-
-
-// Functions
-
-function setRenderSettings(rqItem, rqIndex) {
-    rqItem.outputModule(rqIndex).applyTemplate("Photoshop");
 }
