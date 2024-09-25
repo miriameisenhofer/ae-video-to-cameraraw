@@ -3,3 +3,5 @@ Script for prompting the Camera Raw edit window inside After Effects. This is do
 
 ## Demo
 ![](https://github.com/miriameisenhofer/ae-video-to-cameraraw/blob/master/demo.gif)
+
+Stock footage used in demo by [helivideo](https://stock.adobe.com/de/contributor/204281541/helivideo)
