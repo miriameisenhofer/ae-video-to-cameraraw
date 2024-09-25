@@ -56,6 +56,7 @@ if ((app.project.activeItem == null) || !(app.project.activeItem instanceof Foot
             }
 
             var sequence = outputFolder.fsName + "\\" + comp.name.substring(0, comp.name.lastIndexOf(".")) + "_" + sequenceDigits + ".raw";
+            comp.remove();
 
             var importOptions = new ImportOptions();
             importOptions.file = new File(sequence);
